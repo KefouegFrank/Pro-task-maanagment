@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -13,7 +14,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render("Project/index", []);
     }
 
     /**
