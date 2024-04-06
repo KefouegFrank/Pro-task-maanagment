@@ -55,6 +55,7 @@ export default function index({ auth, projects, queryParams = null }) {
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
+              
               <div className="overflow-auto ">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   {/* table header */}
@@ -157,7 +158,11 @@ export default function index({ auth, projects, queryParams = null }) {
                             alt=""
                           />
                         </td>
-                        <td className="px-3 py-2">{project.name}</td>
+                        <td className="px-3 py-2 text-gray-100 hover:underline">
+                          <Link href={route("project.show", project.id)}>
+                            {project.name}
+                          </Link>
+                        </td>
                         <td className="px-3 py-2">
                           <span
                             className={
@@ -183,7 +188,7 @@ export default function index({ auth, projects, queryParams = null }) {
 
                           <Link
                             href={route("project.destroy", project.id)}
-                            className="bg-red-800 py-1 px-3 hover:bg-red-900 mx-1 font-bold"
+                            className="bg-red-800  py-1 px-3 hover:bg-red-900 mx-1 font-bold"
                           >
                             {" "}
                             Delete
