@@ -17,15 +17,19 @@ class ProjectController extends Controller
     {
         $query = Project::query();
 
+        // sorting implementation
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        // search implementation
         if (request('name')) {
             $query->where('name', 'like', '%' . request('name') . '%');
         }
         if (request('status')) {
             $query->where('status', 'like', '%' . request('status') . '%');
         }
-        // $projects = $query->paginate(10)->onEachSide(1);
 
-        $projects = $query->paginate(10);
+        $projects = $query->orderBy($sortField, $sortDirection)->paginate(10);
 
         return Inertia("Project/Index", [
             'projects' => ProjectResource::collection($projects),
