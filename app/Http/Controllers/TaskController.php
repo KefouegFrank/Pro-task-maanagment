@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Inertia\Inertia;
+use App\Http\Resources\TaskResource;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 
@@ -14,7 +15,26 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Task/index", []);
+        $query = Task::query();
+
+        // sorting implementation
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        // search implementation
+        if (request('name')) {
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+        if (request('status')) {
+            $query->where('status', 'like', '%' . request('status') . '%');
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
+
+        return Inertia("Task/Index", [
+            'tasks' => TaskResource::collection($tasks),
+            'queryParams' => request()->query() ?: null,
+        ]);
     }
 
     /**

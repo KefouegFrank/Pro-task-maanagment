@@ -4,12 +4,6 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import { Head, Link, router } from "@inertiajs/react";
-import {
-  ChevronUpIcon,
-  PencilSquareIcon,
-  TrashIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/16/solid";
 import TableHeading from "@/Components/TableHeading";
 
 export default function index({ auth, projects, queryParams = null }) {
