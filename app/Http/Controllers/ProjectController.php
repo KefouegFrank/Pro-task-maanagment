@@ -43,7 +43,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia("Project/Create", []);
     }
 
     /**
@@ -51,7 +51,8 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $data = $request->validated();
+        dd($data);
     }
 
     /**
@@ -61,20 +62,20 @@ class ProjectController extends Controller
     {
         $query = $project->tasks();
 
-          // sorting implementation
-          $sortField = request("sort_field", 'created_at');
-          $sortDirection = request("sort_direction", 'desc');
-  
-          // search implementation
-          if (request('name')) {
-              $query->where('name', 'like', '%' . request('name') . '%');
-          }
-          if (request('status')) {
-              $query->where('status', 'like', '%' . request('status') . '%');
-          }
-  
-          $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
-  
+        // sorting implementation
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        // search implementation
+        if (request('name')) {
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+        if (request('status')) {
+            $query->where('status', 'like', '%' . request('status') . '%');
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
+
         return inertia("Project/Show", [
             'project' => new ProjectResource($project),
             'tasks' => TaskResource::collection($tasks),
