@@ -16,9 +16,8 @@ export default function Create({ auth }) {
   });
 
   const onSubmit = (e) => {
-    e.prevventDefault();
-
-    post(route("project.store"));
+    e.preventDefault();
+    post(route("project.store"), data); // Passing the data object to the post function
   };
 
   return (
@@ -49,9 +48,8 @@ export default function Create({ auth }) {
                   id="project_image_path"
                   type="file"
                   name="image"
-                  value={data.image}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("image", e.target.value)}
+                  onChange={(e) => setData("image", e.target.files[0])}
                 />
                 <InputError message={errors.image} className="mt-2" />
               </div>
@@ -115,7 +113,7 @@ export default function Create({ auth }) {
                   onChange={(e) => setData("status", e.target.value)}
                 >
                   <option value="">Select Status</option>
-                  <option value="pending">Pensing</option>
+                  <option value="pending">Pending</option>
                   <option value="in_progress">In Progress</option>
                   <option value="completed">Completed</option>
                   <option value="aborted">Aborted</option>
